@@ -70,6 +70,9 @@ The main branch contains the code for NAVSIM v2, used in the 2025 NAVSIM challen
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Changelog <a name="changelog"></a>
+- **`[2025/09/29]`** Bug fix
+  - Fixed a bug in metric filtering where `"multiplicative_metrics_prod"` and `"weighted_metrics"` were not correctly excluded by the human filter (see [Issue #151](https://github.com/autonomousvision/navsim/issues/151#issue-3379282167)).
+
 - **`[2025/07/16]`** **[[ICCV] Hugging Face Warmup leaderboard](https://huggingface.co/spaces/AGC2025/e2e-driving-warmup-iccv)**   release 
   - This release introduces a **registration system**:  
     - After logging in with your Hugging Face account, click Register and fill in your team information  
