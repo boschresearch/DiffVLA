@@ -38,6 +38,7 @@ trainer:
 
     accelerator: gpu  # distribution method
     strategy: ddp
+    # strategy: ddp_find_unused_parameters_true
     precision: 16-mixed  # floating point precision
     num_nodes: 1  # Number of nodes used for training
 

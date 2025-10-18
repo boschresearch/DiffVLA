@@ -134,7 +134,6 @@ def main(cfg: DictConfig) -> None:
     trainer = pl.Trainer(
                         **cfg.trainer.params,
                         callbacks=agent.get_training_callbacks(),
-                        # strategy=DDPStrategy(find_unused_parameters=True)
                         )
 
     logger.info("Starting Training")

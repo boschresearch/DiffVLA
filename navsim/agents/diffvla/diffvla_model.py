@@ -15,15 +15,6 @@ from navsim.agents.diffvla.trajectory_head_reward import TrajectoryHead
 def ensure_batch_dim(x, dim=3):
     return x if x.ndim >= dim else x.unsqueeze(0)
 
-def freeze_module(module: nn.Module):
-    for p in module.parameters():
-        p.requires_grad = False
-
-def unfreeze_module(module: nn.Module):
-    for p in module.parameters():
-        p.requires_grad = True
-
-
 class PartialStatusGater(nn.Module):
     def __init__(self, semantic_dim, gate_dim=20, total_dim=52):
         super().__init__()
@@ -136,14 +127,16 @@ class DiffvlaModelV2(nn.Module):
             config=config,
         )
 
-        self.uncer_gater = PartialStatusGater(config.tf_d_model, gate_dim=52, total_dim=52)
+        # uncertainty is part of the paper named UniUncer which is uncer review for the submission of ICRA2026
+        self.uncer_states_encoder = nn.Linear(20, config.tf_d_model)
+        self.uncer_encoder = nn.MultiheadAttention(embed_dim=config.tf_d_model, num_heads=8, batch_first=True)
+        self.uncer_gater = PartialStatusGater(config.tf_d_model, gate_dim=32, total_dim=32)
 
     def forward(
         self, features: Dict[str, torch.Tensor], targets: Dict[str, torch.Tensor] = None
     ) -> Dict[str, torch.Tensor]:
         """Torch module forward pass."""
 
-        # status_feature: torch.Tensor = features["status_feature"][...,20:]
         status_feature: torch.Tensor = features["status_feature"]
 
         batch_size = status_feature.shape[0]

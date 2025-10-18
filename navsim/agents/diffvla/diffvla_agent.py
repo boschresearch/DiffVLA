@@ -60,7 +60,7 @@ class DiffvlaAgent(AbstractAgent):
         self._lr = lr
 
         self._checkpoint_path = checkpoint_path
-        self._diffvla_model = DiffvlaConfigV2(self._trajectory_sampling, config)
+        self._diffvla_model = DiffvlaModelV2(self._trajectory_sampling, config)
         self.init_from_pretrained()
 
     def init_from_pretrained(self):
@@ -156,7 +156,7 @@ class DiffvlaAgent(AbstractAgent):
         predictions: Dict[str, torch.Tensor],
     ) -> torch.Tensor:
         """Inherited, see superclass."""
-        return transfuser_loss(targets, predictions, self._config)
+        return diffvla_loss(targets, predictions, self._config)
 
     def get_optimizers(
         self,
@@ -166,7 +166,7 @@ class DiffvlaAgent(AbstractAgent):
 
     def get_step_lr_optimizers(self):
         optimizer = torch.optim.Adam(
-            self._transfuser_model.parameters(),
+            self._diffvla_model.parameters(),
             lr=self._lr,
             weight_decay=self._config.weight_decay,
         )
@@ -199,7 +199,7 @@ class DiffvlaAgent(AbstractAgent):
             params = []
             pgs = [[] for _ in paramwise_cfg["name"]]
 
-            for k, v in self._transfuser_model.named_parameters():
+            for k, v in self._diffvla_model.named_parameters():
                 in_param_group = True
                 for i, (pattern, pg_cfg) in enumerate(paramwise_cfg["name"].items()):
                     if pattern in k:
@@ -208,7 +208,7 @@ class DiffvlaAgent(AbstractAgent):
                 if in_param_group:
                     params.append(v)
         else:
-            params = self._transfuser_model.parameters()
+            params = self._diffvla_model.parameters()
 
         optimizer = build_from_configs(optim, optimizer_cfg, params=params)
         # import ipdb; ipdb.set_trace()
@@ -235,7 +235,7 @@ class DiffvlaAgent(AbstractAgent):
 
     def get_training_callbacks(self) -> List[pl.Callback]:
         """Inherited, see superclass."""
-        return [TransfuserCallback(self._config)]
+        return [DiffvlaCallback(self._config)]
     
     def get_feature_builders_test(self) -> List[AbstractFeatureBuilder]:
         """Inherited, see superclass."""
@@ -245,20 +245,20 @@ class DiffvlaAgent(AbstractAgent):
     def get_target_builders_test(self) -> List[AbstractTargetBuilder]:
         """Inherited, see superclass."""
         return [
-            TransfuserTargetBuilderTest(
+            DiffvlaFeatureBuilderTest(
                 trajectory_sampling=self._trajectory_sampling, config=self._config
             )
         ]
     def get_training_callbacks(self) -> List[pl.Callback]:
         """Inherited, see superclass."""
 
-        transfuser_callback = TransfuserCallback(self._config)
+        diffvla_callback = DiffvlaCallback(self._config)
         checkpoint_callback = ModelCheckpoint(
             filename="epoch-{epoch}",  # 文件名格式
             save_top_k=-1,
             every_n_epochs=1  # 每个epoch 保存一次
         )
-        return [transfuser_callback, checkpoint_callback]
+        return [diffvla_callback, checkpoint_callback]
     
     def compute_trajectory(self, agent_input: AgentInput) -> Trajectory:
         """

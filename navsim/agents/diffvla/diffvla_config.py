@@ -114,8 +114,9 @@ class DiffvlaConfigV2:
     trajectory_reg_weight: float = 8.0
     diff_loss_weight: float = 20.0
     agent_class_weight: float = 10.0
-    agent_box_weight: float = 1.0
+    agent_box_weight: float = 0.1
     bev_semantic_weight: float = 14.0
+    uncer_weight: float = 0.9
     # for reward loss
     reward_weight: float = 14.0
 

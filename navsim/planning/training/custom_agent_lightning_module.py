@@ -5,7 +5,6 @@ from typing import Dict, Tuple
 
 from navsim.agents.abstract_agent import AbstractAgent
 
-
 class CustomAgentLightningModule(pl.LightningModule):
     """Pytorch lightning wrapper for learnable agent."""
 
