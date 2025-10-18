@@ -5,7 +5,7 @@ export NAVSIM_EXP_ROOT="/data/gyu3nj/navsim/diffvla_data_exp"
 export NAVSIM_DEVKIT_ROOT="/data/gyu3nj/navsim//navsim" 
 export OPENSCENE_DATA_ROOT="/data/public/navsim"
 
-CACHE_PATH=$NAVSIM_EXP_ROOT/training_cache_diffvla_6v_pdm8192_vlm
+CACHE_PATH=$NAVSIM_EXP_ROOT/training_cache_diffvla_6v_pdm8192
 
 HYDRA_FULL_ERROR=1 python navsim/planning/script/run_training_diffvla.py \
     agent=diffvla_agent \
