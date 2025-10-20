@@ -92,7 +92,7 @@ Run the cache script:
 
 bash metric_cache.sh
 
-You can define your interested data set for evaluation such as navtest or navhard two stage. The default is set to avhard two stage.
+You can define your interested data set for evaluation such as navtest or navhard two stage. The default is set to navhard two stage.
 
 We offer a fast evaluation script to test the model duo to the original test scripts from NAVSIM are too slow (30 min vs 2 hour).
 
@@ -107,14 +107,16 @@ Evaluation results will be saved in the results/ directory by default.
 Please notice that the fast test script will have EPDM scores slightly differ from the original evaluation script the difference related scores between official evaluation scirpt and the fast test script is less than 0.25%.
 
 ## 🚀 5. Notifications
-The released version has some modifications compare to the paper in arxiv.
-1. Update the Trajectory Head from Diffusion Drive to a self developed Transformer based Trajectory Head.
-2. Introduce the reward loss from multiple sub metrics from EPDM Score to guide the training. 
-
+The released version has some modifications compared to the paper on arXiv:
+1. The trajectory head has been updated from Diffusion Drive to a self-developed Transformer-based Trajectory Head.
+2. A reward loss derived from multiple EPDM sub-metrics has been introduced to guide training.
 
 ## 🔧 6. Generate EPDM Scores for Training
-The current Diffvla training need EPDM score for the trajectory voc you defined for tour model.
-We offer a python code to generate EPDM scores and save it to a pkl file with the token of every specific training data.
-Run navsim/misc/gen_multi_trajs_pdm_score_ours.py to generate the EPDM scores for you own trajectory voc.
-This part of code is very immature and buggy change the settings in the navsim/misc/gen_multi_trajs_pdm_score_ours.py such as metric cache, where to save the pdm score, what is the voc file etc.
+The current DiffVLA training requires EPDM scores for the trajectory vocabulary defined in your model.
+We provide a Python script to generate EPDM scores and save them as .pkl files (named with tokens for each training sample).
 
+Run:
+python navsim/misc/gen_multi_trajs_pdm_score_ours.py
+
+### ⚠️ Note: This script is experimental and may require manual adjustment.
+Please update parameters inside navsim/misc/gen_multi_trajs_pdm_score_ours.py, such as metric cache paths, output directories, and vocabulary file paths.
