@@ -1,6 +1,6 @@
 <div align="center">
   <img src="assets/diffvla_overview.png" width="420">
-  <!-- <img src="assets/diffvla++_logo.png" width="420"> -->
+  <img src="assets/diffvla++_logo.png" width="420">
 
   <h2 align="center">DiffVLA: Vision-Language Guided Diffusion Planning for Autonomous Driving</h2>
 
@@ -20,6 +20,10 @@
 <br/>
 
 ---
+
+## 📘 Documentation
+
+- [How to Use DiffVLA →](navsim/agents/diffvla/HowTo.md) — step-by-step configuration and setup guide
 
 # Based on NAVSIM
 

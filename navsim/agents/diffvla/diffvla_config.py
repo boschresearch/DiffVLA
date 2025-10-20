@@ -16,7 +16,7 @@ class DiffvlaConfigV2:
 
     trajectory_sampling: TrajectorySampling = TrajectorySampling(time_horizon=4, interval_length=0.5)
 
-    with_vlm = False
+    
     
     image_architecture: str = "resnet34"
     lidar_architecture: str = "resnet34"
@@ -32,6 +32,7 @@ class DiffvlaConfigV2:
     )
 
     # for pdm score
+    with_vlm = True
     num_voc = 8192
     plan_anchor_path = f"{navsim_exp_root}/planning_vb/trajectory_anchors_{num_voc}.npy"
     pdm_pkl_path = f"{navsim_exp_root}/pdm_scores_{num_voc}"

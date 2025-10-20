@@ -82,7 +82,10 @@ class DiffvlaModelV2(nn.Module):
             sum(self._query_splits), config.tf_d_model
         )  # (30+1, 512)
 
-        self._status_encoding = nn.Linear(32, config.tf_d_model)
+        if self.vlm_flag:
+            self._status_encoding = nn.Linear(32 + 11 + 9, config.tf_d_model)
+        else:
+            self._status_encoding = nn.Linear(32, config.tf_d_model)
 
         self._bev_semantic_head = nn.Sequential(
             nn.Conv2d(
@@ -130,7 +133,10 @@ class DiffvlaModelV2(nn.Module):
         # uncertainty is part of the paper named UniUncer which is uncer review for the submission of ICRA2026
         self.uncer_states_encoder = nn.Linear(20, config.tf_d_model)
         self.uncer_encoder = nn.MultiheadAttention(embed_dim=config.tf_d_model, num_heads=8, batch_first=True)
-        self.uncer_gater = PartialStatusGater(config.tf_d_model, gate_dim=32, total_dim=32)
+        if self.vlm_flag:
+            self.uncer_gater = PartialStatusGater(config.tf_d_model, gate_dim=52, total_dim=52)
+        else:
+            self.uncer_gater = PartialStatusGater(config.tf_d_model, gate_dim=32, total_dim=32)
 
     def forward(
         self, features: Dict[str, torch.Tensor], targets: Dict[str, torch.Tensor] = None

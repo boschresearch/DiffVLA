@@ -76,7 +76,8 @@ class DiffvlaFeatureBuilder(AbstractFeatureBuilder):
         self.image_norm = ImageNorm()
 
         # add vlm cmd
-        self.vlm_data = self._get_vlm_data(config.vlm_json_path)
+        if config.with_vlm:
+            self.vlm_data = self._get_vlm_data(config.vlm_json_path)
 
     # add vlm cmd
     def _get_vlm_data(self, json_path: str) -> List:
@@ -143,47 +144,89 @@ class DiffvlaFeatureBuilder(AbstractFeatureBuilder):
         vlm_cmd = self._get_vlm_nav_cmd(vlm_data, agent_input)
         vlm_cmd_cat = torch.tensor(vlm_cmd[0][0] + vlm_cmd[0][1], dtype=torch.float32)
         
-        features["status_feature"] = torch.concatenate(
-            [
-                vlm_cmd_cat,
-                torch.tensor(
-                    agent_input.ego_statuses[-1].driving_command, dtype=torch.float32
-                ),
-                torch.tensor(
-                    agent_input.ego_statuses[-1].ego_velocity, dtype=torch.float32
-                ),
-                torch.tensor(
-                    agent_input.ego_statuses[-1].ego_acceleration, dtype=torch.float32
-                ),
-                torch.tensor(
-                    agent_input.ego_statuses[-2].driving_command, dtype=torch.float32
-                ),
-                torch.tensor(
-                    agent_input.ego_statuses[-2].ego_velocity, dtype=torch.float32
-                ),
-                torch.tensor(
-                    agent_input.ego_statuses[-2].ego_acceleration, dtype=torch.float32
-                ),
-                torch.tensor(
-                    agent_input.ego_statuses[-3].driving_command, dtype=torch.float32
-                ),
-                torch.tensor(
-                    agent_input.ego_statuses[-3].ego_velocity, dtype=torch.float32
-                ),
-                torch.tensor(
-                    agent_input.ego_statuses[-3].ego_acceleration, dtype=torch.float32
-                ),
-                torch.tensor(
-                    agent_input.ego_statuses[-4].driving_command, dtype=torch.float32
-                ),
-                torch.tensor(
-                    agent_input.ego_statuses[-4].ego_velocity, dtype=torch.float32
-                ),
-                torch.tensor(
-                    agent_input.ego_statuses[-4].ego_acceleration, dtype=torch.float32
-                ),
-            ],
-        )
+        if config.with_vlm:
+            features["status_feature"] = torch.concatenate(
+                [
+                    vlm_cmd_cat,
+                    torch.tensor(
+                        agent_input.ego_statuses[-1].driving_command, dtype=torch.float32
+                    ),
+                    torch.tensor(
+                        agent_input.ego_statuses[-1].ego_velocity, dtype=torch.float32
+                    ),
+                    torch.tensor(
+                        agent_input.ego_statuses[-1].ego_acceleration, dtype=torch.float32
+                    ),
+                    torch.tensor(
+                        agent_input.ego_statuses[-2].driving_command, dtype=torch.float32
+                    ),
+                    torch.tensor(
+                        agent_input.ego_statuses[-2].ego_velocity, dtype=torch.float32
+                    ),
+                    torch.tensor(
+                        agent_input.ego_statuses[-2].ego_acceleration, dtype=torch.float32
+                    ),
+                    torch.tensor(
+                        agent_input.ego_statuses[-3].driving_command, dtype=torch.float32
+                    ),
+                    torch.tensor(
+                        agent_input.ego_statuses[-3].ego_velocity, dtype=torch.float32
+                    ),
+                    torch.tensor(
+                        agent_input.ego_statuses[-3].ego_acceleration, dtype=torch.float32
+                    ),
+                    torch.tensor(
+                        agent_input.ego_statuses[-4].driving_command, dtype=torch.float32
+                    ),
+                    torch.tensor(
+                        agent_input.ego_statuses[-4].ego_velocity, dtype=torch.float32
+                    ),
+                    torch.tensor(
+                        agent_input.ego_statuses[-4].ego_acceleration, dtype=torch.float32
+                    ),
+                ],
+            )
+        else:
+            features["status_feature"] = torch.concatenate(
+                [
+                    torch.tensor(
+                        agent_input.ego_statuses[-1].driving_command, dtype=torch.float32
+                    ),
+                    torch.tensor(
+                        agent_input.ego_statuses[-1].ego_velocity, dtype=torch.float32
+                    ),
+                    torch.tensor(
+                        agent_input.ego_statuses[-1].ego_acceleration, dtype=torch.float32
+                    ),
+                    torch.tensor(
+                        agent_input.ego_statuses[-2].driving_command, dtype=torch.float32
+                    ),
+                    torch.tensor(
+                        agent_input.ego_statuses[-2].ego_velocity, dtype=torch.float32
+                    ),
+                    torch.tensor(
+                        agent_input.ego_statuses[-2].ego_acceleration, dtype=torch.float32
+                    ),
+                    torch.tensor(
+                        agent_input.ego_statuses[-3].driving_command, dtype=torch.float32
+                    ),
+                    torch.tensor(
+                        agent_input.ego_statuses[-3].ego_velocity, dtype=torch.float32
+                    ),
+                    torch.tensor(
+                        agent_input.ego_statuses[-3].ego_acceleration, dtype=torch.float32
+                    ),
+                    torch.tensor(
+                        agent_input.ego_statuses[-4].driving_command, dtype=torch.float32
+                    ),
+                    torch.tensor(
+                        agent_input.ego_statuses[-4].ego_velocity, dtype=torch.float32
+                    ),
+                    torch.tensor(
+                        agent_input.ego_statuses[-4].ego_acceleration, dtype=torch.float32
+                    ),
+                ],
+            )
 
 
         return features
