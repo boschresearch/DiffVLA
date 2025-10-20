@@ -19,7 +19,10 @@
 # exp and dataset
 diffvla_data_exp/ckpt
 diffvla_data_exp/dataset_caching_6v_pdm8192
+diffvla_data_exp/dataset_caching_6v_pdm8192_vlm
 diffvla_data_exp/pdm_scores_8192
 diffvla_data_exp/training_cache_diffvla_6v_pdm8192
 diffvla_data_exp/diffvla_training_6v_8192pdm
+diffvla_data_exp/diffvla_training_6v_8192pdm_vlm
+diffvla_data_exp/training_cache_diffvla_6v_pdm8192_vlm
 

@@ -1,3 +1,36 @@
+<div align="center">
+  <img src="assets/diffvla_logo.png" width="420">
+  <img src="assets/diffvla++_logo.png" width="420">
+
+  <h2 align="center">DiffVLA: Diffusion-based Vision-Language-Action Policy for Autonomous Driving</h2>
+
+  <h3 align="center">
+    <a href="https://arxiv.org/abs/2505.19381">[Paper]</a> |
+    <a href="https://github.com/autonomousvision/navsim">[Base: NAVSIM Repository]</a>
+  </h3>
+
+  <p align="center">
+    DiffVLA builds upon <a href="https://github.com/autonomousvision/navsim">NAVSIM</a> to enable
+    diffusion-driven end-to-end policy learning for language-conditioned autonomous driving.
+    <br/>
+    This repository integrates pseudo-simulation from NAVSIM with diffusion-based trajectory generation.
+  </p>
+</div>
+
+<br/>
+
+---
+
+# Based on NAVSIM
+
+> The following content is inherited from the original NAVSIM repository:
+> [**Pseudo-Simulation for Autonomous Driving**](https://arxiv.org/abs/2506.04218)
+
+<br/>
+
+<div id="top" align="center"> 
+
+
 <div id="top" align="center">
 
 <p align="center">

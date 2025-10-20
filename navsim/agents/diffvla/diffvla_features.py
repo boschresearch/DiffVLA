@@ -26,6 +26,36 @@ from navsim.common.enums import BoundingBoxIndex
 from navsim.planning.scenario_builder.navsim_scenario_utils import tracked_object_types
 from navsim.planning.training.abstract_feature_target_builder import AbstractFeatureBuilder, AbstractTargetBuilder
 
+# vlm command mapping
+speed_plan_mapping_multicls = { #11
+            'Emergency_Decel':      [0,0,0,0,0,0,0,0,0,0,1],
+            'Full_Stop':            [0,0,0,0,0,0,0,0,0,1,0],
+            'Creeping':             [0,0,0,0,0,0,0,0,1,0,0],
+            'Regenerative_Braking': [0,0,0,0,0,0,0,1,0,0,0],
+            'Controlled_Decel':     [0,0,0,0,0,0,0,1,0,0,0],
+            'Mild_Decel_Linear':    [0,0,0,0,0,0,1,0,0,0,0],
+            'Mild_Decel':           [0,0,0,0,0,1,0,0,0,0,0], 
+            'Mild_Accel':           [0,0,0,0,1,0,0,0,0,0,0], 
+            'Mild_Accel_NonLinear': [0,0,0,0,1,0,0,0,0,0,0], 
+            'Mild_Accel_Linear':    [0,0,0,1,0,0,0,0,0,0,0],
+            'Aggressive_Accel':     [0,0,1,0,0,0,0,0,0,0,0],
+            'Constant_Speed_Loose': [0,1,0,0,0,0,0,0,0,0,0],
+            'Constant_Speed_Strict':[1,0,0,0,0,0,0,0,0,0,0]
+            }
+
+path_plan_mapping_multicls = {#9
+    'Sight_Strict':     [0,0,0,0,0,0,0,0,1],  #Swerving
+    'Swerving':         [0,0,0,0,0,0,0,0,1],
+    'Sharp_Left_Turn':  [0,0,0,0,0,0,0,1,0], 
+    'Slight_Left_Turn': [0,0,0,0,0,0,1,0,0],
+    'Sharp_Right_Turn': [0,0,0,0,0,1,0,0,0], 
+    'Slight_Right_Turn':[0,0,0,0,1,0,0,0,0],
+    'Straight_Strict':  [0,0,0,1,0,0,0,0,0], 
+    'Left_LaneChange':  [0,0,1,0,0,0,0,0,0], 
+    'Lane_Micro_Adjust':[0,1,0,0,0,0,0,0,0],
+    'Right_LaneChange': [1,0,0,0,0,0,0,0,0]    
+    }
+
 class DiffvlaFeatureBuilder(AbstractFeatureBuilder):
     """Input feature builder for TransFuser."""
 
@@ -46,7 +76,7 @@ class DiffvlaFeatureBuilder(AbstractFeatureBuilder):
         self.image_norm = ImageNorm()
 
         # add vlm cmd
-        # self.vlm_data = self._get_vlm_data(config.vlm_json_path)
+        self.vlm_data = self._get_vlm_data(config.vlm_json_path)
 
     # add vlm cmd
     def _get_vlm_data(self, json_path: str) -> List:
@@ -107,9 +137,15 @@ class DiffvlaFeatureBuilder(AbstractFeatureBuilder):
         features = self.image_augmnetor(features)
         
         features = self.image_norm(features) # (num_cams, 3, 256, 704)
+
+        # add vlm cmd
+        vlm_data = self.vlm_data
+        vlm_cmd = self._get_vlm_nav_cmd(vlm_data, agent_input)
+        vlm_cmd_cat = torch.tensor(vlm_cmd[0][0] + vlm_cmd[0][1], dtype=torch.float32)
         
         features["status_feature"] = torch.concatenate(
             [
+                vlm_cmd_cat,
                 torch.tensor(
                     agent_input.ego_statuses[-1].driving_command, dtype=torch.float32
                 ),
@@ -151,6 +187,47 @@ class DiffvlaFeatureBuilder(AbstractFeatureBuilder):
 
 
         return features
+
+    # add vlm cmd
+    def _get_vlm_nav_cmd(self, vlm_data, agent_input: AgentInput) -> List[dict]:
+        vlm_nav_cmd_list = []
+
+        for camera_name, camera_value in agent_input.cameras[-1].__dict__.items():
+            if camera_name == 'cam_f0':
+                camfile_id = str(camera_value.camera_path).split('/')[-1]
+                for vlm_dict in vlm_data:
+                    if camfile_id in vlm_dict['image']:
+                        if vlm_dict["answer"] is not None:
+                            vlm_nav_cmd = vlm_dict["answer"]
+                           
+                            speed_plan, path_plan = vlm_nav_cmd.split(', ')
+                            path_plan = path_plan.split('\n')[0]
+                            speed_plan_value = speed_plan_mapping_multicls.get(speed_plan)
+                            path_plan_value = path_plan_mapping_multicls.get(path_plan)
+                            vlm_nav_cmd_list.append([speed_plan_value, path_plan_value])
+ 
+        if vlm_nav_cmd_list == []:
+            print("!!!!!!!!!!!!!!!!!!!!!!!no VLM CMD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+            for camera_name, camera_value in agent_input.cameras[-1].__dict__.items():
+                if camera_name == 'cam_f0':
+                    
+                    camfile_id = str(camera_value.camera_path).split('/')[-1]
+                    camfile_id_long = str(camfile_id.split('.')[0])
+
+                    for vlm_dict in vlm_data:
+                        if camfile_id_long[1:3] in vlm_dict['image'] or camfile_id_long[2:4] in vlm_dict['image'] or camfile_id_long[3:5] in vlm_dict['image'] or camfile_id_long[4:6] in vlm_dict['image']:
+
+                            vlm_nav_cmd = vlm_dict["answer"] #[-1]['value']
+                            speed_plan, path_plan = vlm_nav_cmd.split(', ')
+                            path_plan = path_plan.split('\n')[0]
+                            speed_plan_value = speed_plan_mapping_multicls.get(speed_plan)
+                            path_plan_value = path_plan_mapping_multicls.get(path_plan)
+
+                            print(speed_plan)
+                            print(path_plan)
+                            vlm_nav_cmd_list.append([speed_plan_value, path_plan_value])
+
+        return vlm_nav_cmd_list
 
     def _get_cameras(self, agent_input: AgentInput) -> torch.Tensor:
         """
