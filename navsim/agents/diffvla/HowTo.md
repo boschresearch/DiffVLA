@@ -37,7 +37,7 @@ navsim/agents/diffvla/transfuser_model.py
 has been updated to use the transformer-based trajectory head.
 
 
-## 3. Notes
+## 🧩 3. Notes
 Make sure all paths in configuration files are absolute or relative to the project root.
 
 Cached or generated training data should be excluded via .gitignore.
@@ -46,22 +46,17 @@ You can verify your configuration by running:
 
 python navsim/agents/diffvla/validate_config.py
 
-## 4. (Optional) Training and Evaluation
+## 🧪 4. (Optional) Training and Evaluation
 Below is a recommended structure to extend this guide later:
 
-  
 
 # 🏋️ Training
 Run the following command to start training:
 
 bash scripts/train_diffvla.sh
 
-  
-  
-
 Edit your training script under scripts/ to specify dataset path, GPUs, and hyperparameters.
 
-  
 
 # 🔍 Evaluation
 
