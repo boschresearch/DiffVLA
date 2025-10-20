@@ -1,0 +1,2 @@
+- train_test_split=navhard_two_stage
+- metric_cache_path=/data/gyu3nj/navsim/diffvla_data_exp/metric_cache_navhard_two_stage

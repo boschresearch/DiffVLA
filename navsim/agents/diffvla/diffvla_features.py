@@ -144,7 +144,7 @@ class DiffvlaFeatureBuilder(AbstractFeatureBuilder):
         vlm_cmd = self._get_vlm_nav_cmd(vlm_data, agent_input)
         vlm_cmd_cat = torch.tensor(vlm_cmd[0][0] + vlm_cmd[0][1], dtype=torch.float32)
         
-        if config.with_vlm:
+        if self._config.with_vlm:
             features["status_feature"] = torch.concatenate(
                 [
                     vlm_cmd_cat,

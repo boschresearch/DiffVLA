@@ -1,0 +1,35 @@
+2025-10-20 14:34:15,294 INFO {/data/gyu3nj/navsim/navsim/planning/script/builders/worker_pool_builder.py:19}  Building WorkerPool...
+2025-10-20 14:34:17,116 INFO {/data/gyu3nj/navsim/navsim/planning/utils/multithreading/worker_ray_no_torch.py:50}  Not using GPU in ray
+2025-10-20 14:34:17,116 INFO {/data/gyu3nj/navsim/navsim/planning/utils/multithreading/worker_ray_no_torch.py:76}  Starting ray local!
+2025-10-20 14:34:22,266 INFO {/data/conda/envs/diffvla_h20/lib/python3.9/site-packages/nuplan/planning/utils/multithreading/worker_pool.py:101}  Worker: RayDistributedNoTorch
+2025-10-20 14:34:22,267 INFO {/data/conda/envs/diffvla_h20/lib/python3.9/site-packages/nuplan/planning/utils/multithreading/worker_pool.py:102}  Number of nodes: 1
+Number of CPUs per node: 64
+Number of GPUs per node: 0
+Number of threads across all nodes: 64
+2025-10-20 14:34:22,267 INFO {/data/gyu3nj/navsim/navsim/planning/script/builders/worker_pool_builder.py:27}  Building WorkerPool...DONE!
+2025-10-20 14:37:11,580 INFO {/data/gyu3nj/navsim/navsim/planning/script/builders/worker_pool_builder.py:19}  Building WorkerPool...
+2025-10-20 14:37:12,746 INFO {/data/gyu3nj/navsim/navsim/planning/utils/multithreading/worker_ray_no_torch.py:50}  Not using GPU in ray
+2025-10-20 14:37:12,746 INFO {/data/gyu3nj/navsim/navsim/planning/utils/multithreading/worker_ray_no_torch.py:76}  Starting ray local!
+2025-10-20 14:37:17,428 INFO {/data/conda/envs/diffvla_h20/lib/python3.9/site-packages/nuplan/planning/utils/multithreading/worker_pool.py:101}  Worker: RayDistributedNoTorch
+2025-10-20 14:37:17,428 INFO {/data/conda/envs/diffvla_h20/lib/python3.9/site-packages/nuplan/planning/utils/multithreading/worker_pool.py:102}  Number of nodes: 1
+Number of CPUs per node: 64
+Number of GPUs per node: 0
+Number of threads across all nodes: 64
+2025-10-20 14:37:17,428 INFO {/data/gyu3nj/navsim/navsim/planning/script/builders/worker_pool_builder.py:27}  Building WorkerPool...DONE!
+2025-10-20 14:54:42,131 INFO {/data/gyu3nj/navsim/navsim/planning/script/builders/worker_pool_builder.py:19}  Building WorkerPool...
+2025-10-20 14:54:44,999 INFO {/data/gyu3nj/navsim/navsim/planning/utils/multithreading/worker_ray_no_torch.py:50}  Not using GPU in ray
+2025-10-20 14:54:44,000 INFO {/data/gyu3nj/navsim/navsim/planning/utils/multithreading/worker_ray_no_torch.py:76}  Starting ray local!
+2025-10-20 14:54:49,199 INFO {/data/conda/envs/diffvla_h20/lib/python3.9/site-packages/nuplan/planning/utils/multithreading/worker_pool.py:101}  Worker: RayDistributedNoTorch
+2025-10-20 14:54:49,200 INFO {/data/conda/envs/diffvla_h20/lib/python3.9/site-packages/nuplan/planning/utils/multithreading/worker_pool.py:102}  Number of nodes: 1
+Number of CPUs per node: 64
+Number of GPUs per node: 0
+Number of threads across all nodes: 64
+2025-10-20 14:54:49,200 INFO {/data/gyu3nj/navsim/navsim/planning/script/builders/worker_pool_builder.py:27}  Building WorkerPool...DONE!
+2025-10-20 14:55:29,935 INFO {/data/gyu3nj/navsim/navsim/planning/script/run_pdm_score_trajs.py:351}  Starting pdm scoring of 5912 scenarios...
+2025-10-20 15:02:22,817 INFO {/data/gyu3nj/navsim/navsim/planning/script/run_pdm_score_trajs.py:461}  
+        Finished running evaluation.
+            Number of successful scenarios: 5912.
+            Number of failed scenarios: 0.
+            Final extended pdm score of valid results: 0.3807349876603895.
+            Results are stored in: /data/gyu3nj/navsim/diffvla_data_exp/diffvla_8192/diffvla_8192_fast_test/2025.10.20.15.02.22.csv.
+        

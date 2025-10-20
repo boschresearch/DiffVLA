@@ -1,0 +1,15 @@
+2025-10-20 14:25:15,181 INFO {/data/gyu3nj/navsim/navsim/planning/script/builders/worker_pool_builder.py:19}  Building WorkerPool...
+2025-10-20 14:25:17,132 INFO {/data/gyu3nj/navsim/navsim/planning/utils/multithreading/worker_ray_no_torch.py:50}  Not using GPU in ray
+2025-10-20 14:25:17,132 INFO {/data/gyu3nj/navsim/navsim/planning/utils/multithreading/worker_ray_no_torch.py:76}  Starting ray local!
+2025-10-20 14:25:21,863 INFO {/data/conda/envs/diffvla_h20/lib/python3.9/site-packages/nuplan/planning/utils/multithreading/worker_pool.py:101}  Worker: RayDistributedNoTorch
+2025-10-20 14:25:21,863 INFO {/data/conda/envs/diffvla_h20/lib/python3.9/site-packages/nuplan/planning/utils/multithreading/worker_pool.py:102}  Number of nodes: 1
+Number of CPUs per node: 64
+Number of GPUs per node: 0
+Number of threads across all nodes: 64
+2025-10-20 14:25:21,863 INFO {/data/gyu3nj/navsim/navsim/planning/script/builders/worker_pool_builder.py:27}  Building WorkerPool...DONE!
+2025-10-20 14:25:21,863 INFO {/data/gyu3nj/navsim//navsim/planning/script/run_metric_caching.py:29}  Starting Metric Caching...
+2025-10-20 14:26:14,786 INFO {/data/gyu3nj/navsim/navsim/planning/metric_caching/caching.py:166}  Starting metric caching of 76 files...
+2025-10-20 14:32:08,610 INFO {/data/gyu3nj/navsim/navsim/planning/metric_caching/caching.py:174}  Completed dataset caching! All 5912 features and targets were cached successfully.
+2025-10-20 14:32:08,611 INFO {/data/gyu3nj/navsim/navsim/planning/metric_caching/caching.py:193}  Node 0: Storing metadata csv file containing cache paths for valid features and targets...
+2025-10-20 14:32:08,876 INFO {/data/conda/envs/diffvla_h20/lib/python3.9/site-packages/nuplan/planning/training/experiments/cache_metadata_entry.py:66}  Using cache_metadata_storage_path: /data/gyu3nj/navsim/diffvla_data_exp/metric_cache_navhard_two_stage/metadata/metric_cache_navhard_two_stage_metadata_node_0.csv
+2025-10-20 14:32:08,901 INFO {/data/gyu3nj/navsim/navsim/planning/metric_caching/caching.py:195}  Done storing metadata csv file.
