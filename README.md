@@ -2,7 +2,7 @@
   <img src="assets/diffvla_logo.png" width="420">
   <img src="assets/diffvla++_logo.png" width="420">
 
-  <h2 align="center">DiffVLA: Diffusion-based Vision-Language-Action Policy for Autonomous Driving</h2>
+  <h2 align="center">DiffVLA: Vision-Language Guided Diffusion Planning for Autonomous Driving</h2>
 
   <h3 align="center">
     <a href="https://arxiv.org/abs/2505.19381">[Paper]</a> |
