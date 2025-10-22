@@ -1,6 +1,6 @@
 <div align="center">
   <img src="assets/diffvla_overview.png" width="768">
-  <img src="assets/cvpr2025_e2e_rank.png" width="480">
+  <img src="assets/cvpr2025_e2e_rank.png" width="768">
 
   <h2 align="center">DiffVLA: Vision-Language Guided Diffusion Planning for Autonomous Driving</h2>
 
