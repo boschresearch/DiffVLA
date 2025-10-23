@@ -15,6 +15,13 @@
     <br/>
     This repository integrates pseudo-simulation from NAVSIM with diffusion-based trajectory generation.
   </p>
+
+  <p align="center">
+    We are keep working on E2E models and we will keep update the latest work list here: 
+    <br/>
+    <a href="https://arxiv.org/abs/2509.14303">[FlowDrive: Energy Flow Field for End-to-End Autonomous Driving]</a> |
+    <a href="https://arxiv.org/abs/2508.06571">[IRL-VLA: Training an Vision-Language-Action Policy via Reward World Model]</a> |
+  </p>
 </div>
 
 <br/>
