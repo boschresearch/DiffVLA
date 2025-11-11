@@ -130,7 +130,7 @@ class DiffvlaModelV2(nn.Module):
             config=config,
         )
 
-        # uncertainty is part of the paper named UniUncer which is uncer review for the submission of ICRA2026
+        
         self.uncer_states_encoder = nn.Linear(20, config.tf_d_model)
         self.uncer_encoder = nn.MultiheadAttention(embed_dim=config.tf_d_model, num_heads=8, batch_first=True)
         if self.vlm_flag:
