@@ -1,0 +1,12 @@
+Third Party Licenses
+====================
+
+-------------------------------------------------------------------------
+Overview
+--------------------------------------------------------------------------
+
+navsim: https://github.com/autonomousvision/navsim
+License: Apache License 2.0
+
+bevfusion: https://github.com/mit-han-lab/bevfusion
+License: Apache License 2.0
