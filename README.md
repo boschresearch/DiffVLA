@@ -34,6 +34,9 @@
 This guide explains how to set up and configure the **DiffVLA** module inside the NAVSIM framework.
 ---
 
+The image backbone is from https://github.com/youngwanLEE/vovnet-detectron2
+Please download the weights of VoV99 net in the upper repo.
+
 ## ⚙️ 1. Configuration 
 Please update the following parameters in
 
