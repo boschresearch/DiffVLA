@@ -10,3 +10,6 @@ License: Apache License 2.0
 
 bevfusion: https://github.com/mit-han-lab/bevfusion
 License: Apache License 2.0
+
+vovnet-detectron2: https://github.com/youngwanLEE/vovnet-detectron2
+License: Attribution-NonCommercial 4.0 International
