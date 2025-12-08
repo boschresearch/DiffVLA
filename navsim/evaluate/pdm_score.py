@@ -113,6 +113,92 @@ def pdm_score(
         traffic_agents_policy=traffic_agents_policy,
     )
 
+#For Multi trajectory scores
+def pdm_score_multi_trajs(
+    metric_cache: MetricCache,
+    model_trajectory_list: Trajectory,
+    future_sampling: TrajectorySampling,
+    simulator: PDMSimulator,
+    scorer: PDMScorer,
+) -> MultiPDMResults:
+    """
+    FIXME: Output type hints and refactoring/debugging. Inconsistent with some evaluation scripts.
+    Runs PDM-Score and saves results in the corresponding dataclass.
+    :param metric_cache: Metric cache dataclass of the sample.
+    :param model_trajectory: Predicted trajectory in ego frame.
+    :param future_sampling: Sampling configuration of the model trajectory.
+    :param simulator: Simulator applied on the model trajectory.
+    :param scorer: Scoring object to retrieve the sub-scores
+    :param traffic_agents_policy: background traffic used during simulation/scoring.
+    :return: Dataclass of PDM sub-scores.
+    """
+
+    # get ego states
+    initial_ego_state = metric_cache.ego_state
+    # compute states for multi trajs
+    pred_states_list = []
+    for traj in model_trajectory_list:
+        model_trajectory = Trajectory(traj)
+        pred_trajectory = transform_trajectory(model_trajectory, initial_ego_state)
+        pred_states = get_trajectory_as_array(pred_trajectory, future_sampling, initial_ego_state.time_point)
+        pred_states_list.append(pred_states[None, ...])
+
+    return pdm_score_from_interpolated_multi_trajectory(
+        metric_cache=metric_cache,
+        initial_ego_state=initial_ego_state,
+        pred_states_list=pred_states_list,
+        simulator=simulator,
+        scorer=scorer,
+    )
+
+def pdm_score_from_interpolated_multi_trajectory(
+    metric_cache,
+    initial_ego_state,
+    pred_states_list,
+    simulator,
+    scorer,
+)-> MultiPDMResults:
+    trajectory_states = np.concatenate(pred_states_list, axis=0)
+    simulated_states = simulator.simulate_proposals(trajectory_states, initial_ego_state)
+
+    scores = scorer.score_proposals(
+        simulated_states,
+        metric_cache.observation,
+        metric_cache.centerline,
+        metric_cache.route_lane_ids,
+        metric_cache.drivable_area_map,
+    )
+
+    # print(f'simulated scores are {scores}')
+
+    no_at_fault_collisions = scorer._multi_metrics[MultiMetricIndex.NO_COLLISION, :]
+    drivable_area_compliance = scorer._multi_metrics[MultiMetricIndex.DRIVABLE_AREA, :]
+    driving_direction_compliance = scorer._multi_metrics[
+        MultiMetricIndex.DRIVING_DIRECTION, :
+    ]
+    traffic_light_compliance = scorer._multi_metrics[
+        MultiMetricIndex.TRAFFIC_LIGHT_COMPLIANCE, :
+    ]
+
+    ego_progress = scorer._weighted_metrics[WeightedMetricIndex.PROGRESS, :]
+    time_to_collision_within_bound = scorer._weighted_metrics[WeightedMetricIndex.TTC, :]
+    lane_keeping = scorer._weighted_metrics[WeightedMetricIndex.LANE_KEEPING, :]
+    history_comfort = scorer._weighted_metrics[WeightedMetricIndex.HISTORY_COMFORT, :]
+
+    score = scores[:]
+
+    return MultiPDMResults(
+        no_at_fault_collisions,
+        drivable_area_compliance,
+        driving_direction_compliance,
+        traffic_light_compliance,
+        ego_progress,
+        time_to_collision_within_bound,
+        lane_keeping,
+        history_comfort,
+        score,
+    )
+
 
 def pdm_score_from_interpolated_trajectory(
     metric_cache: MetricCache,

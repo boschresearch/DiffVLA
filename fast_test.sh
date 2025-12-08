@@ -7,7 +7,7 @@ export OPENSCENE_DATA_ROOT="/data/public/navsim"
 
 CACHE_PATH=$NAVSIM_EXP_ROOT/metric_cache_navhard_two_stage
 
-CKPT="diffvla_data_exp/diffvla_training_6v_8192pdm_vlm/2025.10.20.10.54.39/lightning_logs/version_0/checkpoints/epoch-epoch\=4.ckpt"
+CKPT=CKPT
 
 EXP_NAME="diffvla_8192"
 EXP_ID="diffvla_8192_fast_test"
