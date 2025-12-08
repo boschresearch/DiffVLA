@@ -125,7 +125,9 @@ The released version has some modifications compared to the paper on arXiv:
 The current DiffVLA training requires EPDM scores for the trajectory vocabulary defined in your model.
 We provide a Python script to generate EPDM scores and save them as .pkl files (named with tokens for each training sample).
 
-Run:
+The user need to cache the dataset 1st before runing this. The caching is same with the official metric cache simply run: scripts/evaluation/run_metric_caching.sh by changing the TRAIN_TEST_SPLIT to navtrain.
+
+Then Run:
 python navsim/misc/gen_multi_trajs_pdm_score_ours.py
 
 ### ⚠️ Note: This script is experimental and may require manual adjustment.
